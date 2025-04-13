@@ -56,7 +56,7 @@ const ProductsSection = () => {
         scrollTrigger: {
           trigger: q(".section-title"),
           start: "top 90%",
-          markers: true, // For debugging; remove later
+          markers: false, // For debugging; remove later
         },
         opacity: 0,
         y: 20,
@@ -84,7 +84,7 @@ const ProductsSection = () => {
         end: "bottom+=500 top",
         pin: true,
         scrub: true,
-        markers: true, // Debug markers—remove when satisfied
+        markers: false, // Debug markers—remove when satisfied
       });
 
       // Animate each product item sequentially (first the image then the title)
@@ -97,7 +97,7 @@ const ProductsSection = () => {
             trigger: item,
             start: "top 80%",
             toggleActions: "play none none reverse",
-            markers: true, // Debug markers—remove when satisfied
+            markers: false, // Debug markers—remove when satisfied
           },
         });
 
