@@ -8,79 +8,30 @@ import ProductsSection from "../components/ProductsSection.jsx";
 import ContactSection from "../components/ContactSection.jsx";
 import SustanabilitySection from "../components/SustanabilitySection.jsx";
 import JourneySection from "../components/JourneySection.jsx";
+import InteractiveBalls from "../components/InteractiveBalls.jsx";
 
 export const Home = () => {
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
-
-    //     const cards = document.querySelectorAll(".container .card");
-    //     const firstCard = document.getElementById("card1");
-    //     const otherCards = Array.from(cards).filter((card) => card !== firstCard);
-
-    //     gsap.set(firstCard, { y: 0, scale: 1, zIndex: cards.length });
-    //     otherCards.forEach((card, i) => {
-    //       gsap.set(card, { y: (i + 1) * 20, scale: 1 - (i + 1) * 0.05, zIndex: cards.length - (i + 1) });
-    //     });
-
-    //     const finalPositions = [];
-    //     const gap = 40;
-    //     let runningOffset = firstCard.offsetHeight;
-    //     otherCards.forEach((card, i) => {
-    //       finalPositions[i] = runningOffset + gap;
-    //       runningOffset += card.offsetHeight + gap;
-    //     });
-
-    //     const tl = gsap.timeline({
-    //       scrollTrigger: {
-    //         trigger: ".container",
-    //         start: "top 55%",
-    //         end: "+=600",
-    //         scrub: true,
-    //       },
-    //     });
-
-    //     let cumulativeShift = 0;
-    //     otherCards.forEach((card, i) => {
-    //       const initialY = (i + 1) * 10 + cumulativeShift;
-    //       const targetY = finalPositions[i];
-    //       const delta = targetY - initialY;
-
-    //       tl.to(otherCards.slice(i), { y: `+=${delta}`, scale: 1, ease: "power2.out", duration: 0.5 }, "+=0.15");
-
-    //       cumulativeShift += delta;
-    //     });
-    //     }
-    //     , []);
-
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-      
+
         const cards = document.querySelectorAll(".container .card");
         const firstCard = document.getElementById("card1");
-        
         const otherCards = Array.from(cards).filter((card) => card !== firstCard);
-      
-        
+
         gsap.set(firstCard, { y: 0, scale: 1, zIndex: cards.length });
         otherCards.forEach((card, i) => {
-          gsap.set(card, {
-            y: (i + 1) * 20,
-            scale: 1 - (i + 1) * 0.05,
-            zIndex: cards.length - (i + 1),
-          });
+          gsap.set(card, { y: (i + 1) * 20, scale: 1 - (i + 1) * 0.05, zIndex: cards.length - (i + 1) });
         });
-      
-        
+
         const finalPositions = [];
-        const gap = 40;
+        const gap = 35;
         let runningOffset = firstCard.offsetHeight;
         otherCards.forEach((card, i) => {
           finalPositions[i] = runningOffset + gap;
           runningOffset += card.offsetHeight + gap;
         });
-      
-        
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".container",
@@ -89,36 +40,86 @@ export const Home = () => {
             scrub: true,
           },
         });
-      
+
         let cumulativeShift = 0;
         otherCards.forEach((card, i) => {
-          
-          const initialY = (i + 1) * 20 + cumulativeShift;
+          const initialY = (i + 1) * 10 + cumulativeShift;
           const targetY = finalPositions[i];
-          const deltaY = targetY - initialY;
-      
-          
-          tl.to(otherCards.slice(i), {
-            y: `+=${deltaY}`,
-            ease: "power2.out",
-            duration: 0.5,
-          }, "+=0.15");
-      
-          
-          gsap.to(card, {
-            scrollTrigger: {
-              trigger: card,
-              
-              end: "bottom center",
-              scrub: true,
-            },
-            scale: 1,
-            ease: "power2.out",
-          });
-      
-          cumulativeShift += deltaY; 
+          const delta = targetY - initialY;
+
+          tl.to(otherCards.slice(i), { y: `+=${delta}`, scale: 1, ease: "power2.out", duration: 0.5 }, "+=0.15");
+
+          cumulativeShift += delta;
         });
-      }, []);
+        }
+        , []);
+
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
+      
+    //     const cards = document.querySelectorAll(".container .card");
+    //     const firstCard = document.getElementById("card1");
+        
+    //     const otherCards = Array.from(cards).filter((card) => card !== firstCard);
+      
+        
+    //     gsap.set(firstCard, { y: 0, scale: 1, zIndex: cards.length });
+    //     otherCards.forEach((card, i) => {
+    //       gsap.set(card, {
+    //         y: (i + 1) * 20,
+    //         scale: 1 - (i + 1) * 0.05,
+    //         zIndex: cards.length - (i + 1),
+    //       });
+    //     });
+      
+        
+    //     const finalPositions = [];
+    //     const gap = 40;
+    //     let runningOffset = firstCard.offsetHeight;
+    //     otherCards.forEach((card, i) => {
+    //       finalPositions[i] = runningOffset + gap;
+    //       runningOffset += card.offsetHeight + gap;
+    //     });
+      
+        
+    //     const tl = gsap.timeline({
+    //       scrollTrigger: {
+    //         trigger: ".container",
+    //         start: "top 55%",
+    //         end: "+=600",
+    //         scrub: true,
+    //       },
+    //     });
+      
+    //     let cumulativeShift = 0;
+    //     otherCards.forEach((card, i) => {
+          
+    //       const initialY = (i + 1) * 20 + cumulativeShift;
+    //       const targetY = finalPositions[i];
+    //       const deltaY = targetY - initialY;
+      
+          
+    //       tl.to(otherCards.slice(i), {
+    //         y: `+=${deltaY}`,
+    //         ease: "power2.out",
+    //         duration: 0.5,
+    //       }, "+=0.15");
+      
+          
+    //       gsap.to(card, {
+    //         scrollTrigger: {
+    //           trigger: card,
+              
+    //           end: "bottom center",
+    //           scrub: true,
+    //         },
+    //         scale: 1,
+    //         ease: "power2.out",
+    //       });
+      
+    //       cumulativeShift += deltaY; 
+    //     });
+    //   }, []);
       
       
       
@@ -182,6 +183,10 @@ export const Home = () => {
                 </div>
             </div>
             </section>
+            <section id="convert-fiat">
+        <h2>Why Choose Us?</h2>
+        <InteractiveBalls />
+      </section>
             <ContactSection />   
         </>
     );
