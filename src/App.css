@@ -1,0 +1,432 @@
+@font-face {
+  font-family: "Sequel Sans Book Body";
+  src: url("/assets/SequelSans-BookBody.woff2") format("woff2"),
+    url("/assets/SequelSans-BookBody.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sequel Sans Roman Body";
+  src: url("/assets/SequelSans-RomanBody.woff2") format("woff2"),
+    url("/assets/SequelSans-RomanBody.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sequel Sans Medium Body";
+  src: url("/assets/SequelSans-MediumBody.woff2") format("woff2"),
+    url("/assets/SequelSans-MediumBody.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sequel Sans Bold Body";
+  src: url("/assets/SequelSans-BoldBody.woff2") format("woff2"),
+    url("/assets/SequelSans-BoldBody.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sequel Sans Semi Bold Body";
+  src: url("/assets/SequelSans-SemiBoldBody.woff2") format("woff2"),
+    url("/assets/SequelSans-SemiBoldBody.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Sequel Sans Book Body";
+  margin: 0;
+  padding: 0;
+  font-size: clamp(16px, 1.5vw, 18px);
+  box-sizing: border-box;
+}
+
+/* ------------------------------
+  Bolierplate Styles
+  ------------------------------
+*/
+
+:root{
+  --site_primary-clr: #F84D35;
+  --site_secondary-clr: #FFD3CD;
+  --site_title-clr: #F73B20;
+  --site_black-clr: #000;
+  --site_white-clr: #fff;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+img {
+  max-width: 100%;
+}
+
+h1 {
+  font-size: clamp(40px, 6vw, 100px);
+  font-family: "Sequel Sans Semi Bold Body";
+  letter-spacing: -0.48px;
+}
+h2 {
+  font-size: clamp(38px, 4vw, 80px);
+  font-family: "Sequel Sans Bold Body";
+  letter-spacing: -0.48px;
+}
+h3{
+  font-size: clamp(22px, 3.5vw, 32px);
+  font-family: "Sequel Sans Semi Bold Body"; 
+}
+h4 {
+  font-size: clamp(20px, 3vw, 28px);
+  font-family: "Sequel Sans Semi Bold Body";
+}
+p {
+  font-size: clamp(18px, 2.6vw, 24px);
+  /* font-family: "Sequel Sans Medium Body"; */
+  font-weight: 600;
+  line-height: 120%;
+}
+.extra_small {
+  font-size: clamp(16px, 1.5vw, 18px);
+}
+
+.site_flex {
+  display: flex;
+}
+.site_flex_center_vertical {
+  align-items: center;
+}
+.site_flex-column {
+  flex-direction: column;
+}
+
+.site_gradient-clr{
+  background: linear-gradient(180deg, rgba(255, 181, 119, 0) 71.4%, #FFB577 108.26%), var(--site_white-clr);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.site_gird{display: grid;}
+.site_gird-center{grid-column:1;grid-row: 1;}
+
+.section_inner-space{padding: clamp(50px, 80vw, 200px) 0  ;}
+
+/* ------------------------------
+  Header Styles
+  ------------------------------
+*/
+
+
+
+.site_header {
+  position: fixed;
+  bottom: 120px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background: var(--site_white-clr);
+  max-width: fit-content;
+  border-radius: 50px;
+  padding: 4px 20px 4px 4px;
+  margin: 0 auto;
+  transform: translate(-50%, -0%);
+  left: 50%;
+  z-index: 100;
+  transition: all 0.3s linear; 
+}
+.site_header.background-orange {clip-path: none;}
+.site_header.background-orange :is(*){color: var(--site_white-clr);}
+.site_header.background-orange :is(img):not(.site_nav-logo img){filter: brightness(100);}
+.site_nav-logo {
+  background: var(--site_secondary-clr);
+  display: flex;
+  padding: 8px 17px;
+  border-radius: 50px;
+}
+.site_nav-center{gap: clamp(18px, 4vw, 28px);}
+.site_nav-link a {
+  color: var(--site_primary-clr);
+}
+.site_header-link-text {
+  margin-right: 5px;
+}
+
+/* ------------------------------
+  Hero Styles
+  ------------------------------
+*/
+
+.hero_section-inner {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+
+.hero_section-overlay {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.hero_section-overlay-inner{
+  padding: 30px 0;
+  justify-content: space-between;
+  max-width: 1000px;
+  width: 100%;
+  margin:
+0 auto;
+}
+.hero_section-description {
+  color: var(--site_white-clr);
+}
+.hero_section-title{margin-bottom: clamp(15px, 2.3vw, 30px);}
+.hero_section-center {
+  margin-bottom: clamp(50px, 4.5vw, 110px);
+}
+
+/* ------------------------------
+  Section With Background Styles
+  ------------------------------
+*/
+
+.section_with_background-inner{
+  position: relative;
+}
+.section_with_background-overlay-inner {
+  justify-content: center;
+  align-items: center;
+  max-width: 1130px;
+  text-align: center;
+}
+
+.section_with_background-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.section_with_background-description{color: var(--site_white-clr); line-height: 33px; font-weight: 300;  }
+.section_with_background-title{color: var(--site_white-clr); margin-bottom: clamp(15px, 2.3vw, 30px); }
+
+
+
+/*-------------------------------------
+  Products Styles
+  ------------------------------
+*/
+
+
+.products-section {
+  background: var(--site_white-clr);
+  position: relative;
+  padding: 100px 0;
+  
+}
+
+.products-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 3rem;
+  color: #f33;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #ff5e5e;
+  margin-bottom: 2rem;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.product-item img,
+.product-item h3 {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.product-item img {
+  width: 120px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+.product-item h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+
+
+
+
+/*-------------------------------------
+  Testimonial Styles
+  ------------------------------
+*/
+
+.container {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+position: relative;
+}
+.card {
+  position: absolute;
+  width: 100%;
+  padding: 17px 0 45px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(17.55px);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform-origin: center top;
+  color: var(--site_white-clr);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.site_border{height: 3px; width: 48px; background: var(--site_white-clr); }
+.card p {
+  max-width: 506px;
+  width: 100%;
+}
+
+.testimonial_overlay{
+  justify-content: flex-start;
+}
+
+
+/*-------------------------------------
+  Contact Styles
+  ------------------------------
+*/
+
+.background-orange {
+  background: var(--site_primary-clr);
+}
+.background-clip{
+  clip-path: polygon(0% -1%, 100% -1%, 100% 100%, 50% 101%, 50% 101%, 0% 100%);
+}
+.background-orange :is(*){
+  color: var(--site_white-clr);
+}
+.background-white :is(*){
+  color: var(--site_primary-clr);
+}
+.contactSection-Inner{text-align: center;}
+.contactSection-Innertop-description{max-width: 692px ; width: 100%;}
+
+.contactSection-Inner .contactSection-InnerContent {
+  gap:
+120px;
+}
+.contactSection-Innerbottom{row-gap: 30px;}
+.contact-text{color: var(--site_black-clr);}
+
+
+/*-------------------------------------
+  Sustainability Styles
+  ------------------------------
+*/
+
+
+.sustainability-inner{row-gap: 120px; text-align: center;}
+.sustainability-description{max-width: 842px; color: var(--site_black-clr); font-weight: 500;}
+
+
+.section-text_area{display: flex; gap: 20px; flex-direction: column;}
+
+.animate_cover-image {
+  border-radius:30px;
+} 
+
+
+/*-------------------------------------
+  Journey Styles
+  ------------------------------
+*/
+
+
+.journey_section_overlay{position: inherit;}
+
+
+.journey_section {
+  overflow:
+hidden;
+}
+.journey_section.parallex_img-left {
+  position: absolute;
+  left: 0;
+  top: 20px;
+}
+.journey_section.parallex_img-right {
+  position: absolute;
+  right: -100px;
+  bottom: 30px;
+}
+
+.journey_section_overlay .section_with_background-center {
+  max-width: 850px;
+}
+
+
+/*-------------------------------------
+  Footer Styles
+  ------------------------------
+*/
+
+footer {
+  padding:50px 25px;
+  text-align: center;
+}
