@@ -191,7 +191,15 @@ background-clip: text;
   text-align: center;
   align-items: center;
 }
+.hero_section-image{width: 100%;}
 
+.hero_section-button{background: transparent; border: 2px solid var(--site_white-clr); border-radius: 50px; padding: 15px 20px; color: var(--site_white-clr); font-weight: 600; cursor: pointer; transition: all 0.3s linear; max-width: fit-content; margin: 0 auto 50px;}
+
+.hero_section-image :is(video,img){
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .hero_section-overlay {
   position: absolute;
