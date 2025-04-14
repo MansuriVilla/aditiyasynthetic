@@ -185,6 +185,7 @@ background-clip: text;
   ------------------------------
 */
 
+.hero_section{background-color: var(--site_primary-clr);}
 
 /* Loading Button Spinner */
 .spinner {
