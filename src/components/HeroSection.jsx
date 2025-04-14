@@ -46,7 +46,7 @@ export const HeroSection = () => {
             <div className="hero_section-inner site_flex site_flex-column">
                 <div className="hero_section-image hero_background site_flex">
                     <video
-                        src={isFirstVideo ? "/assets/video-1.mp4" : "/assets/video-2.mp4"}
+                        src={isFirstVideo ? "/assets/video-2.mp4" : "/assets/video-1.mp4"}
                         autoPlay
                         loop
                         muted
