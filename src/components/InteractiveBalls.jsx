@@ -5,6 +5,7 @@ const InteractiveBalls = () => {
   const sceneRef = useRef(null);
   const engineRef = useRef(Matter.Engine.create());
   const runnerRef = useRef(null);
+  const renderRef = useRef(null);
   const [startAnimation, setStartAnimation] = useState(false);
   const ballsRef = useRef([]);
 
@@ -15,7 +16,7 @@ const InteractiveBalls = () => {
           setStartAnimation(true);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (sceneRef.current) {
@@ -31,23 +32,54 @@ const InteractiveBalls = () => {
     if (!startAnimation) return;
 
     const engine = engineRef.current;
+    const container = sceneRef.current;
+
+    // Initial dimensions
+    let width = container.clientWidth;
+    let height = container.clientHeight;
 
     const render = Matter.Render.create({
-      element: sceneRef.current,
+      element: container,
       engine,
       options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width,
+        height,
         wireframes: false,
         background: 'transparent',
       },
     });
+    renderRef.current = render;
+
+    // Style canvas properly
+    render.canvas.style.position = 'absolute';
+    render.canvas.style.top = '0';
+    render.canvas.style.left = '0';
+    render.canvas.style.width = '100%';
+    render.canvas.style.height = '100%';
 
     const runner = Matter.Runner.create();
     runnerRef.current = runner;
 
     Matter.Runner.run(runner, engine);
     Matter.Render.run(render);
+
+    // Add mouse control for interactivity
+    const mouse = Matter.Mouse.create(render.canvas);
+    const mouseConstraint = Matter.MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false,
+        },
+      },
+    });
+
+    Matter.World.add(engine.world, mouseConstraint);
+    render.mouse = mouse;
+
+    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
+    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
 
     const context = render.context;
     const originalDrawBody = Matter.Render.body;
@@ -62,7 +94,6 @@ const InteractiveBalls = () => {
         context.translate(x, y);
         context.rotate(body.angle);
 
-        // Clip to a rounded path
         context.beginPath();
         context.arc(0, 0, radius, 0, 2 * Math.PI);
         context.clip();
@@ -70,7 +101,6 @@ const InteractiveBalls = () => {
         const image = new Image();
         image.src = sprite.texture;
 
-        // Draw the image after it is loaded
         image.onload = () => {
           context.drawImage(
             image,
@@ -87,40 +117,49 @@ const InteractiveBalls = () => {
       }
     };
 
-    const height = window.innerHeight;
-
-    const ground = Matter.Bodies.rectangle(
-      window.innerWidth / 2,
-      height + 50, // Push it further down if needed
-      window.innerWidth,
-      60,
-      {
-        isStatic: true,
-        render: { visible: false }, // 👈 Hide the black bar
-      }
-    );
-
+    // Walls (side + bottom)
+    const ground = Matter.Bodies.rectangle(width / 2, height, width, 60, {
+      isStatic: true,
+      render: { visible: false },
+    });
     const leftWall = Matter.Bodies.rectangle(-30, height / 2, 60, height, {
       isStatic: true,
       render: { visible: false },
     });
-
-    const rightWall = Matter.Bodies.rectangle(window.innerWidth + 30, height / 2, 60, height, {
+    const rightWall = Matter.Bodies.rectangle(width + 30, height / 2, 60, height, {
       isStatic: true,
       render: { visible: false },
     });
 
-    const mouse = Matter.Mouse.create(render.canvas);
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: { visible: false },
-      },
-    });
+    Matter.World.add(engine.world, [ground, leftWall, rightWall]);
 
-    Matter.World.add(engine.world, [ground, leftWall, rightWall, mouseConstraint]);
+    // Convert DOM labels to Matter.js bodies
+    const updateStaticBodies = () => {
+      // Clear previous static bodies (except walls)
+      const bodiesToRemove = engine.world.bodies.filter(
+        (body) => body.isStatic && body !== ground && body !== leftWall && body !== rightWall
+      );
+      bodiesToRemove.forEach((body) => Matter.World.remove(engine.world, body));
 
+      const labelElements = document.querySelectorAll('.why_choose-us-bottom-inner');
+      labelElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const x = rect.left + rect.width / 2 - containerRect.left;
+        const y = rect.top + rect.height / 2 - containerRect.top;
+
+        const body = Matter.Bodies.rectangle(x, y, rect.width, rect.height, {
+          isStatic: true,
+          render: { visible: false },
+        });
+
+        Matter.World.add(engine.world, body);
+      });
+    };
+
+    updateStaticBodies();
+
+    // Ball dropping
     const imageUrls = [
       '/assets/Ellipse-1.webp',
       '/assets/Ellipse-2.webp',
@@ -145,13 +184,13 @@ const InteractiveBalls = () => {
       if (ballsRef.current.length >= 17) return;
 
       const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-
-      const ball = Matter.Bodies.circle(Math.random() * window.innerWidth, -50, 30, {
-        restitution: 0.9,
+      const ball = Matter.Bodies.circle(Math.random() * width, -40, 30, {
+        restitution: 0.8,
+        friction: 0.001,
         render: {
           sprite: {
             texture: randomImage,
-            xScale: 1, // slight bump to fit circle
+            xScale: 1,
             yScale: 1,
           },
         },
@@ -159,7 +198,29 @@ const InteractiveBalls = () => {
 
       ballsRef.current.push(ball);
       Matter.World.add(engine.world, ball);
-    }, 0);
+    }, 120);
+
+    // Handle window resize
+    const handleResize = () => {
+      width = container.clientWidth;
+      height = container.clientHeight;
+
+      // Update canvas dimensions
+      render.options.width = width;
+      render.options.height = height;
+      render.canvas.width = width;
+      render.canvas.height = height;
+
+      // Reposition walls
+      Matter.Body.setPosition(ground, { x: width / 2, y: height });
+      Matter.Body.setPosition(leftWall, { x: -30, y: height / 2 });
+      Matter.Body.setPosition(rightWall, { x: width + 30, y: height / 2 });
+
+      // Update static bodies
+      updateStaticBodies();
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       clearInterval(dropInterval);
@@ -169,10 +230,24 @@ const InteractiveBalls = () => {
       Matter.Engine.clear(engine);
       render.canvas.remove();
       render.textures = {};
+      window.removeEventListener('resize', handleResize);
     };
   }, [startAnimation]);
 
-  return <div ref={sceneRef} style={{ height: '100vh', width: '100%' }} />;
+  return (
+    <div
+      ref={sceneRef}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        zIndex: 1,
+      }}
+    />
+  );
 };
 
 export default InteractiveBalls;

@@ -471,6 +471,37 @@ hidden;
 }
 
 
+
+/*-------------------------------------
+  Why Choose Us Styles
+  ------------------------------
+*/
+.title_orange {
+  color: var(--site_primary-clr);
+}
+.why_choose-us-bottom-inner {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+#convert-fiat{position: relative; overflow: hidden;}
+.why_choose-us-label{background: rgba(247, 59, 32, 10%); border-radius: 10px; display: flex; justify-content: center; align-items: center; text-align: center; padding: 22px 0; width: 100%; }
+
+.why_choose-us-inner {
+  max-width: 800px;
+  width: 100%;
+  margin:
+0 auto;
+row-gap: 40px;
+}
+
+.why_choose-us-bottom {
+  width: 100%;
+}
+
+
+
+
 /*-------------------------------------
   Footer Styles
   ------------------------------

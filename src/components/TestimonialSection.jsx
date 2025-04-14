@@ -40,7 +40,7 @@ export const TestimonialSection = () => {
           const targetY = finalPositions[i];
           const delta = targetY - initialY;
 
-          tl.to(otherCards.slice(i), { y: `+=${delta}`, scale: 1, ease: "power2.out", duration: 0.5 }, "+=0.15");
+          tl.to(otherCards.slice(i), { y: `+=${delta}`, scale: 1, ease: "linear", duration: 0.5 }, "+=0.15");
 
           cumulativeShift += delta;
         });
