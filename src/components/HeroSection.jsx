@@ -37,11 +37,11 @@ import React, { useState } from "react";
 export const HeroSection = () => {
     const [isFirstVideo, setIsFirstVideo] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const [isVideoReady, setIsVideoReady] = useState(true); // New state to manage video readiness
+    const [isVideoReady, setIsVideoReady] = useState(true);
 
     const toggleVideo = () => {
         setIsLoading(true); // Show the loader
-        setIsVideoReady(false); // Temporarily hide the new video until it's ready
+        setIsVideoReady(false); // Temporarily disable the fade-in effect
 
         const videoElement = document.createElement("video");
         videoElement.src = isFirstVideo ? "/assets/video-1.mp4" : "/assets/video-2.mp4";
@@ -50,7 +50,11 @@ export const HeroSection = () => {
         videoElement.oncanplaythrough = () => {
             setIsFirstVideo(!isFirstVideo); // Switch the video
             setIsLoading(false); // Hide the loader
-            setIsVideoReady(true); // Show the new video
+
+            // Trigger fade-in animation
+            setTimeout(() => {
+                setIsVideoReady(true);
+            }, 50); // Small delay to re-trigger the fade-in effect
         };
     };
 
@@ -58,7 +62,6 @@ export const HeroSection = () => {
         <section className="hero_section">
             <div className="hero_section-inner site_flex site_flex-column">
                 <div className="hero_section-image hero_background site_flex">
-                    {/* Current video remains visible until the new video is ready */}
                     <video
                         src={isFirstVideo ? "/assets/video-2.mp4" : "/assets/video-1.mp4"}
                         autoPlay
@@ -81,10 +84,10 @@ export const HeroSection = () => {
                             <button
                                 onClick={toggleVideo}
                                 className="hero_section-button"
-                                disabled={isLoading} // Disable button while loading
+                                disabled={isLoading}
                             >
                                 {isLoading ? (
-                                    <span className="spinner"></span> // Show spinner while loading
+                                    <span className="spinner"></span>
                                 ) : (
                                     "Tap To See Second Option"
                                 )}
