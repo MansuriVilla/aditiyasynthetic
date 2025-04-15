@@ -24,7 +24,7 @@ const WhyChooseUsSection = () => {
           start: "top 80%", 
           end: "bottom 90%", 
           toggleActions: "play none none none", 
-          markers: true, 
+          markers: false, 
           scrub: true, 
         },
         opacity: 0,
