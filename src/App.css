@@ -139,6 +139,14 @@ background-clip: text;
 
 .section_inner-space{padding: clamp(50px, 80vw, 200px) 0  ;}
 
+.parallax-image {
+  will-change: transform;
+  object-fit: cover;
+}
+
+
+
+
 /* ------------------------------
   Header Styles
   ------------------------------
@@ -270,6 +278,8 @@ background-clip: text;
   ------------------------------
 */
 
+.section_with_background-image{overflow: hidden;}
+.section_with_background-image img{scale: 1.3;}
 .section_with_background-inner{
   position: relative;
 }
@@ -500,7 +510,45 @@ row-gap: 40px;
   width: 100%;
 }
 
+/*-------------------------------------
+  Industries Section Styles
+  ------------------------------
+*/
 
+.industries-section_title h2{text-align: center;}
+
+.pinned-section {
+  position: relative;
+  min-height: 100vh;
+  background: #fff;
+  overflow: hidden;
+  
+}
+
+.cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+}
+
+.card_overlay-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  border-radius: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* .card_overlay-item {position: relative;}*/
+.card_overlay-item h2{position: absolute; bottom: 110px; color: #fff;} 
 
 
 /*-------------------------------------

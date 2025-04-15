@@ -7,32 +7,32 @@ gsap.registerPlugin(ScrollTrigger);
 const items = [
   {
     title: "Textile Dyes",
-    image:
-      "https://images.unsplash.com/photo-1741851374674-e4b7e573a9e7?w=500&auto=format&fit=crop&q=60",
+    // image:
+    //   "https://images.unsplash.com/photo-1741851374674-e4b7e573a9e7?w=500&auto=format&fit=crop&q=60",
     color: "#F29F05",
   },
   {
     title: "Plastic Dyes",
-    image:
-      "https://images.unsplash.com/photo-1741722604231-3d24c0c44864?w=500&auto=format&fit=crop&q=60",
+    // image:
+    //   "https://images.unsplash.com/photo-1741722604231-3d24c0c44864?w=500&auto=format&fit=crop&q=60",
     color: "#D12B85",
   },
   {
     title: "Coating Dyes",
-    image:
-      "https://images.unsplash.com/photo-1741866987680-5e3d7f052b87?w=500&auto=format&fit=crop&q=60",
+    // image:
+    //   "https://images.unsplash.com/photo-1741866987680-5e3d7f052b87?w=500&auto=format&fit=crop&q=60",
     color: "#1645A3",
   },
   {
     title: "Printing Inks",
-    image:
-      "https://images.unsplash.com/photo-1742138162252-363d0d38a063?w=500&auto=format&fit=crop&q=60",
+    // image:
+    //   "https://images.unsplash.com/photo-1742138162252-363d0d38a063?w=500&auto=format&fit=crop&q=60",
     color: "#0E5EB3",
   },
   {
     title: "Specialty Dyes",
-    image:
-      "https://images.unsplash.com/photo-1726930095303-4aac9ba8bb74?w=500&auto=format&fit=crop&q=60",
+    // image:
+    //   "https://images.unsplash.com/photo-1726930095303-4aac9ba8bb74?w=500&auto=format&fit=crop&q=60",
     color: "#522211",
   },
 ];

@@ -135,26 +135,35 @@ const InteractiveBalls = () => {
 
     // Convert DOM labels to Matter.js bodies
     const updateStaticBodies = () => {
-      // Clear previous static bodies (except walls)
       const bodiesToRemove = engine.world.bodies.filter(
         (body) => body.isStatic && body !== ground && body !== leftWall && body !== rightWall
       );
       bodiesToRemove.forEach((body) => Matter.World.remove(engine.world, body));
 
-      const labelElements = document.querySelectorAll('.why_choose-us-bottom-inner');
+      const labelElements = document.querySelectorAll('.why_choose-us-inner');
+
       labelElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
+      
+        const buffer = 50; // Add a buffer to avoid clipping
+      
         const x = rect.left + rect.width / 2 - containerRect.left;
         const y = rect.top + rect.height / 2 - containerRect.top;
-
-        const body = Matter.Bodies.rectangle(x, y, rect.width, rect.height, {
+      
+        const width = rect.width + buffer;
+        const height = rect.height + buffer;
+      
+        const body = Matter.Bodies.rectangle(x, y, width, height, {
           isStatic: true,
-          render: { visible: false },
+          render: {
+            visible: false,
+          },
         });
-
+      
         Matter.World.add(engine.world, body);
       });
+      
     };
 
     updateStaticBodies();
@@ -190,8 +199,8 @@ const InteractiveBalls = () => {
         render: {
           sprite: {
             texture: randomImage,
-            xScale: 1,
-            yScale: 1,
+            xScale: 0.8,
+            yScale: 0.8,
           },
         },
       });
@@ -200,23 +209,19 @@ const InteractiveBalls = () => {
       Matter.World.add(engine.world, ball);
     }, 120);
 
-    // Handle window resize
     const handleResize = () => {
       width = container.clientWidth;
       height = container.clientHeight;
 
-      // Update canvas dimensions
       render.options.width = width;
       render.options.height = height;
       render.canvas.width = width;
       render.canvas.height = height;
 
-      // Reposition walls
       Matter.Body.setPosition(ground, { x: width / 2, y: height });
       Matter.Body.setPosition(leftWall, { x: -30, y: height / 2 });
       Matter.Body.setPosition(rightWall, { x: width + 30, y: height / 2 });
 
-      // Update static bodies
       updateStaticBodies();
     };
 
@@ -245,6 +250,7 @@ const InteractiveBalls = () => {
         height: '100%',
         overflow: 'hidden',
         zIndex: 1,
+        // pointerEvents: 'none',
       }}
     />
   );
