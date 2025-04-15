@@ -206,6 +206,7 @@ background-clip: text;
       transform: rotate(360deg);
   }
 }
+.hero_section-button{display:none;}
 
 .hero_section-button:disabled {
   opacity: 0.6;

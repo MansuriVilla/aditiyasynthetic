@@ -5,8 +5,8 @@ import ProductsSection from "../components/ProductsSection.jsx";
 import ContactSection from "../components/ContactSection.jsx";
 import SustanabilitySection from "../components/SustanabilitySection.jsx";
 import JourneySection from "../components/JourneySection.jsx";
-import InteractiveBalls from "../components/InteractiveBalls.jsx";
 import TestimonialSection from "../components/TestimonialSection.jsx";
+import WhyChooseUsSection from "../components/WhyChooseUsSection.jsx";
 
 export const Home = () => {
     return (
@@ -15,7 +15,8 @@ export const Home = () => {
             <JourneySection />
             <ProductsSection />
             <SustanabilitySection />
-            <section id="convert-fiat">
+            <WhyChooseUsSection />
+            {/* <section id="convert-fiat">
                 <div className="why_choose-us-section">
                 <div className="why_choose-us-inner site_flex site_flex-column site_flex_center_vertical section_inner-space">
                     <div className="why_choose-us-top">
@@ -44,7 +45,7 @@ export const Home = () => {
                 </div>
         
         <InteractiveBalls />
-      </section>
+            </section> */}
             <SectionWithBackground />
             <TestimonialSection />
             
