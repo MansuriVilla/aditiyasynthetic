@@ -16,7 +16,7 @@ const InteractiveBalls = () => {
           setStartAnimation(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
     if (sceneRef.current) {
@@ -140,7 +140,7 @@ const InteractiveBalls = () => {
       );
       bodiesToRemove.forEach((body) => Matter.World.remove(engine.world, body));
 
-      const labelElements = document.querySelectorAll('.why_choose-us-inner');
+      const labelElements = document.querySelectorAll('.why_choose-us-bottom');
 
       labelElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
@@ -194,8 +194,8 @@ const InteractiveBalls = () => {
 
       const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
       const ball = Matter.Bodies.circle(Math.random() * width, -40, 30, {
-        restitution: 0.8,
-        friction: 0.001,
+        restitution: 0.8, 
+        friction: 0.001,  
         render: {
           sprite: {
             texture: randomImage,

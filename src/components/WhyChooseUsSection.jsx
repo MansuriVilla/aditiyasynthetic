@@ -22,9 +22,9 @@ const WhyChooseUsSection = () => {
         scrollTrigger: {
           trigger: labelsContainerRef.current,
           start: "top 80%", 
-          end: "bottom 70%", 
+          end: "bottom 90%", 
           toggleActions: "play none none none", 
-          markers: false, 
+          markers: true, 
           scrub: true, 
         },
         opacity: 0,
