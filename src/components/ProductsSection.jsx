@@ -79,7 +79,7 @@ const ProductsSection = () => {
               <img src="/assets/pill-4.webp" alt="Product 4" />
             </div>
             <div className="products_section-content-item-right">
-              <h3 style={{color:"#C52460"}}>Printing Inks</h3>
+              <h3 style={{color:"#0568AF"}}>Printing Inks</h3>
             </div>
           </div>
           <div className="products_section-content-item">
@@ -87,7 +87,7 @@ const ProductsSection = () => {
               <img src="/assets/pill-4.webp" alt="Product 4" />
             </div>
             <div className="products_section-content-item-right">
-              <h3 style={{color:"#C52460"}}>Specialty Dyes</h3>
+              <h3 style={{color:"#603223"}}>Specialty Dyes</h3>
             </div>
           </div>
         </div>
