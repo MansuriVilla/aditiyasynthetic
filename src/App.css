@@ -643,6 +643,9 @@ video {
   Why Choose Us Styles
   ------------------------------
 */
+.why_choose-us-label p {
+  color: #000;
+}
 .title_orange {
   color: var(--site_primary-clr);
 }
