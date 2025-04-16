@@ -14,7 +14,7 @@ export const BeyondColor = () => {
         end: "+=1500",                 // Extend the scroll distance by 1500 pixels (adjust as needed)
         scrub: 1,                      // Increase scrub delay for a slower reaction to scroll input
         pin: true,                     // Pin the container while animation plays
-        markers: true,                 // Enable markers for debugging positions (remove in production)
+        markers: false,                 // Enable markers for debugging positions (remove in production)
       }
     });
 
