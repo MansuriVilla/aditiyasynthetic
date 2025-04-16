@@ -64,7 +64,7 @@ export const IndustriesSection = () => {
     });
   });
   return (
-    <div className="industries-section">
+    <div className="industries-section section_inner-space">
       <div className="industries-section_inner">
         <div className="industries-section_title">
             <h2 className="title_orange">Industries We Serve</h2>

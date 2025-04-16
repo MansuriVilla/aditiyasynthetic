@@ -43,18 +43,10 @@
   font-display: swap;
 }
 
-body {
-  font-family: "Sequel Sans Book Body";
-  margin: 0;
-  padding: 0;
-  font-size: clamp(16px, 1.5vw, 18px);
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
 
 /* ------------------------------
-  Bolierplate Styles
-  ------------------------------
+Bolierplate Styles
+------------------------------
 */
 
 :root{
@@ -65,6 +57,16 @@ body {
   --site_white-clr: #fff;
 }
 
+html,body{scroll-behavior: smooth;}
+
+body {
+  font-family: "Sequel Sans Book Body";
+  margin: 0;
+  padding: 0;
+  font-size: clamp(16px, 1.5vw, 18px);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
 
 h1,
 h2,
@@ -144,7 +146,7 @@ background-clip: text;
   object-fit: cover;
 }
 
-
+img, picture, video{display: inline-flex;}
 
 
 /* ------------------------------
@@ -307,65 +309,43 @@ background-clip: text;
   ------------------------------
 */
 
-
-.products-section {
-  background: var(--site_white-clr);
+.products_section {
   position: relative;
-  padding: 100px 0;
-  
+  overflow: hidden;
 }
+.products_section-title{text-align: center; margin-bottom:40px ;}
+.products_section .section_inner-space,.products_section-inner{padding-top: 80px;}
 
-.products-container {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
 
-.section-title {
-  font-size: 3rem;
-  color: #f33;
-  margin-bottom: 0.5rem;
-}
 
-.section-subtitle {
-  font-size: 1.1rem;
-  color: #ff5e5e;
-  margin-bottom: 2rem;
-}
-
-.products-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  margin-top: 4rem;
-}
-
-.product-item {
+.products_section-content-inner{display: flex; flex-direction: column; gap: 12px;}
+.products_section-content-item {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
   justify-content: center;
+  gap: 38px;
+}
+.products_section-content-item h3{font-size: clamp(38px, 4vw, 80px); line-height: 120%;}
+
+.products_section-content-item:nth-child(even){
+  flex-direction: row-reverse;
 }
 
-.product-item img,
-.product-item h3 {
-  opacity: 0;
-  transform: translateY(50px);
+.products_section-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.product-item img {
-  width: 120px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 40px;
+.products_section-content img {
+  max-width: 150px;
+  width: 100%;
+  height: auto;
 }
 
-.product-item h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-
+.item_mask{position: relative;}
+.item_mask img{max-width: 500px; width: 100%;}
 
 
 

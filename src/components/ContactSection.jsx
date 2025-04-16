@@ -32,7 +32,7 @@ export default function ContactSection() {
       }, []);
 
   return (
-    <section className="contactSection-Area">
+    <section className="contactSection-Area" id="contact">
       <div className="contactSection-Inner site_gird">
         <div className="contactSection-InnerContent site_flex site_flex-column section_inner-space site_flex_center_vertical background-clip background-orange site_gird-center">
             <div className="contactSection-Innertop">
@@ -46,13 +46,13 @@ export default function ContactSection() {
             <div className="contactSection-Innerbottom-top">
                 <h3>Aditya synthetic</h3>
             </div>
-            <div className="contactSection-Innerbottom-center">
+            <div className="contactSection-Innerbottom-center site_flex site_flex-column site_flex_center_vertical">
                 <img src="/assets/phone-ico.svg" alt="Phone Icon" />
                 <h3>
                 <a href="tel:+91 12345 12345" className="contact-text">+91 12345 12345</a>
                 </h3>
             </div>
-            <div className="contactSection-Innerbottom-center">
+            <div className="contactSection-Innerbottom-center site_flex site_flex-column site_flex_center_vertical">
                 <img src="/assets/mail-ico.svg" alt="Mail Icon" />
                 <h3>
                 <a href="mailto:adityasynthetic@gmail.com" className="contact-text">
@@ -74,13 +74,13 @@ export default function ContactSection() {
             <div className="contactSection-Innerbottom-top">
                 <h3>Aditya synthetic</h3>
             </div>
-            <div className="contactSection-Innerbottom-center">
+            <div className="contactSection-Innerbottom-center site_flex site_flex-column site_flex_center_vertical">
                 <img src="/assets/phone-ico.svg" alt="Phone Icon" />
                 <h3>
                 <a href="tel:+91 12345 12345" className="contact-text">+91 12345 12345</a>
                 </h3>
             </div>
-            <div className="contactSection-Innerbottom-center">
+            <div className="contactSection-Innerbottom-center site_flex site_flex-column site_flex_center_vertical">
                 <img src="/assets/mail-ico.svg" alt="Mail Icon" />
                 <h3>
                 <a href="mailto:adityasynthetic@gmail.com" className="contact-text">
