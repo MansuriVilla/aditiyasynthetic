@@ -105,6 +105,7 @@ export const Header = () => {
                     </li>
                     <li className="site_nav-link">
                         <a href="/" className="site_flex site_flex_center_vertical">
+                        <span className="background"></span>
                             <span className="site_header-link-text">News & Events</span>
                             <span className="site_flex site_flex_center_vertical">
                                 <img src="/assets/anchor-arrow-ico.svg" alt="arrow icon" />
@@ -113,6 +114,7 @@ export const Header = () => {
                     </li>
                     <li className="site_nav-link">
                         <a href="/" className="site_flex site_flex_center_vertical">
+                        <span className="background"></span>
                             <span className="site_header-link-text">Shades</span>
                             <span className="site_flex site_flex_center_vertical">
                                 <img src="/assets/dropdown-arrow-ico.svg" alt="dropdown arrow icon" />
@@ -121,6 +123,7 @@ export const Header = () => {
                     </li>
                     <li className="site_nav-link">
                         <a href="#contact" className="site_flex site_flex_center_vertical">
+                            <span className="background"></span>
                             <span className="site_header-link-text">Contact Us</span>
                             <span className="site_flex site_flex_center_vertical">
                                 <img src="/assets/dropdown-arrow-ico.svg" alt="dropdown arrow icon" />

@@ -185,9 +185,48 @@ img, picture, video{display: inline-flex;}
 .site_nav-center{gap: clamp(18px, 4vw, 28px);}
 .site_nav-link a {
   color: var(--site_primary-clr);
+  padding: 10px;
+  border-radius: 50px;
+  /* background-color: var(--site_secondary-clr); */
+  position: relative;
 }
 .site_header-link-text {
   margin-right: 5px;
+}
+.background{height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  position: absolute; 
+}
+
+.site_header.background-orange .site_nav-link a > .background{
+  background-color: #ffffff;
+}
+
+
+.site_nav-link a > .background {
+  background-color: rgba(247, 59, 32, 100%);
+  border-radius:
+inherit;
+  opacity: 0;
+  transition:
+opacity .3s cubic-bezier(.215,.61,.355,1);
+    transition-property: opacity;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site_nav-link a > .background {
+    transform: scale(.9);
+    transition-property: opacity,transform;
+  }
+}   
+@media (hover: hover) and (pointer: fine) {
+  .site_nav-link a:hover > .background {
+    opacity: .1;
+    transform: scale(1);
+  }
 }
 
 /* ------------------------------

@@ -42,7 +42,7 @@ const ProductsSection = () => {
   }, []);
 
   return (
-    <section className="products_section">
+    <section className="products_section background-white">
     <div className="products_section-inner site_flex site_flex-column site_flex_center_vertical">
       <div className="products_section-title">
         <h2 className="title_orange">Our Products</h2>

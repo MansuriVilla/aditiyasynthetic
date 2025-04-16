@@ -43,7 +43,7 @@ export const JourneySection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="section_with_background journey_section">
+        <section ref={sectionRef} className=" section_with_background journey_section">
             <div className="section_with_background-inner site_flex site_flex-column background-orange">
                 <div className="section_with_background-overlay journey_section_overlay section_inner-space">
                     <div className="section_with_background-overlay-inner site_flex site_flex-column">

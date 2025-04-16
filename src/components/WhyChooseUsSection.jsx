@@ -41,7 +41,7 @@ const WhyChooseUsSection = () => {
   }, []);
 
   return (
-    <section id="convert-fiat" ref={sectionRef}>
+    <section id="convert-fiat" className="background-white" ref={sectionRef}>
       <div className="why_choose-us-section">
         <div className="why_choose-us-inner site_flex site_flex-column site_flex_center_vertical section_inner-space">
           <div className="why_choose-us-top">
