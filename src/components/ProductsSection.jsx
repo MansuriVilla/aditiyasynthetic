@@ -6,41 +6,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ProductsSection = () => {
   useEffect(() => {
-    const items = gsap.utils.toArray(".products_section-content-item");
-
-    const master = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".products_section",
-        start: "top top",
-        end: `+=${items.length * 200}%`, // Enough scroll space
-        scrub: true,
-        pin: true,
-        snap: 1 / (items.length - 1),
-        markers: false,
-      },
+    const mm = ScrollTrigger.matchMedia();
+  
+    mm.add("(min-width: 1025px)", () => {
+      const items = gsap.utils.toArray(".products_section-content-item");
+  
+      const master = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".products_section",
+          start: "top top",
+          end: `+=${items.length * 200}%`,
+          scrub: true,
+          pin: true,
+          snap: 1 / (items.length - 1),
+          markers: false,
+        },
+      });
+  
+      items.forEach((item) => {
+        const img = item.querySelector("img");
+        const title = item.querySelector("h3");
+  
+        const tl = gsap.timeline();
+        tl.fromTo(
+          img,
+          { opacity: 0, y: 50 },
+          { opacity: 1, y: 0, duration: 0.5 }
+        ).fromTo(
+          title,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          "+=0.2"
+        );
+  
+        master.add(tl);
+      });
+  
+      // Optional: clean this timeline on media unmatch
+      return () => {
+        master.kill();
+      };
     });
-
-    // Sequential animations
-    items.forEach((item) => {
-      const img = item.querySelector("img");
-      const title = item.querySelector("h3");
-
-      const tl = gsap.timeline();
-      tl.fromTo(
-        img,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.5 }
-      ).fromTo(
-        title,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "+=0.2"
-      );
-
-      master.add(tl);
-    });
+  
+    return () => {
+      mm.kill(); // Cleans up all matchMedia animations on unmount
+    };
   }, []);
-
+  
   return (
     <section className="products_section background-white">
     <div className="products_section-inner site_flex site_flex-column site_flex_center_vertical">

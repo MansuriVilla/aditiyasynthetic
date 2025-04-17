@@ -152,7 +152,7 @@ p {
 }
 
 .section_inner-space {
-  padding: clamp(50px, 80vw, 200px) 0;
+  padding: clamp(50px, 15vw, 200px) 15px;
 }
 
 .parallax-image {
@@ -306,6 +306,7 @@ video {
   justify-content: center;
   text-align: center;
   align-items: center;
+  min-height: 95vh;
 }
 .hero_section-image {
   width: 100%;
@@ -326,7 +327,7 @@ video {
 
 .hero_section-image :is(video, img) {
   width: 100%;
-  height: 100%;
+  min-height: 95vh;
   object-fit: cover;
 }
 
@@ -362,6 +363,7 @@ video {
   min-height: 100vh;
   height: 100%;
 }
+.beyond_color h2{font-size: clamp(40px, 6vw, 100px) ;}
 .beyond_color-inner {
   display: flex;
   justify-content: center;
@@ -384,25 +386,26 @@ video {
 .snippet {
   position: absolute;
 }
+.snippet img {max-width: clamp(260px, 17vw, 500px);}
 .snippet:nth-child(1) {
   left: -19%;
-  top: 6.25%;
+  top: 25%;
   transform: translate(-12px, -66.6333px);
 }
 .snippet:nth-child(2) {
-  right: -16.75%;
+  right: -50.75%;
   top: 3.125%;
   transform: translate(5%, -2%);
 }
 
 .snippet:nth-child(3) {
-  bottom: 20%;
-  right: -18.75%;
+  bottom: -10%;
+  right: -50.75%;
   transform: translate(4%, -10%);
 }
 
 .snippet:nth-child(4) {
-  bottom: 8.25%;
+  bottom: -20%;
   left: -31.25%;
   transform: translate(0);
 }
@@ -418,6 +421,7 @@ video {
   ------------------------------
 */
 
+
 .section_with_background-image {
   overflow: hidden;
 }
@@ -430,13 +434,15 @@ video {
 .section_with_background-overlay-inner {
   justify-content: center;
   align-items: center;
-  max-width: 1130px;
+  max-width: clamp(600px, 82vw, 1130px);
   text-align: center;
 }
 
 .section_with_background-overlay {
   position: absolute;
-  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  /* width: 100%; */
   height: 100%;
   display: flex;
   justify-content: center;
@@ -478,7 +484,7 @@ video {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 38px;
+  gap: clamp(18px, 5vw, 38px) ;
 }
 .products_section-content-item h3 {
   font-size: clamp(38px, 4vw, 80px);
@@ -497,16 +503,17 @@ video {
 }
 
 .products_section-content img {
-  max-width: 150px;
+  max-width: clamp(80px, 10vw, 150px);
   width: 100%;
   height: auto;
 }
 
 .item_mask {
   position: relative;
+  display: flex;
 }
 .item_mask img {
-  max-width: 500px;
+  max-width: clamp(320px, 30vw, 500px);
   width: 100%;
 }
 
@@ -665,14 +672,14 @@ video {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 22px 0;
-  width: 100%;
+  padding: 22px;
 }
 
 .why_choose-us-inner {
-  max-width: 800px;
+  max-width: clamp(300px, 40vw, 800px);
   width: 100%;
   margin: 0 auto;
+  text-align: center;
   row-gap: 40px;
 }
 
@@ -684,6 +691,9 @@ video {
   Industries Section Styles
   ------------------------------
 */
+.industries-section_title {
+  margin-bottom: 40px;
+}
 
 .industries-section_title h2 {
   text-align: center;
@@ -694,6 +704,11 @@ video {
   min-height: 100vh;
   background: #fff;
   overflow: hidden;
+}
+
+
+.card_overlay {
+  display: flex;
 }
 
 .cards-container {
@@ -732,4 +747,44 @@ video {
 footer {
   padding: 50px 25px;
   text-align: center;
+}
+
+@media only screen and (max-width:1024px){
+  
+  .cards-container{display: flex; flex-direction: column; row-gap: 20px;}
+  .card_overlay-item{position: relative;}
+  .card_overlay-item h2{bottom: 20px; font-size: clamp(20px, 6vw, 40px); text-align: center;}
+  .industries-section_title { margin-bottom: 40px; }
+  .sustainability-inner{ row-gap: clamp(50px, 7vw, 120px);}
+  .animate_cover-image { border-radius: 10px; }
+  .parallex_img{display: none;}
+
+  /* .industries-section_inner {
+    padding:
+  0px 40px;
+  } */
+
+  .snippets-holder{position: relative; inset: 0; display: grid;  row-gap: 40px;    grid-template-columns: repeat(auto-fill, minmax(clamp(270px, 50vw, 350px), 1fr));
+  }
+  .beyond_color h2{margin-bottom: 40px;}
+  .snippet {
+    position: relative;
+    inset:
+  0 !important;
+      
+    transform: none !important;}
+
+    .beyond_color-inner{
+      flex-direction: column;}
+      .item_mask img{max-width: clamp(150px, 7vw, 500px);}
+
+      .products_section-content-item h3{font-size: clamp(24px, 4vw, 80px);}
+}
+
+@media only screen and (max-width:575px){
+  .hero_section-description{max-width: 200px;
+    width: 100%;
+    margin:
+  0 auto;}
+  .card_overlay-item h2{font-size: clamp(20px, 5vw, 40px);}
 }

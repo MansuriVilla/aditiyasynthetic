@@ -52,7 +52,7 @@ export const JourneySection = () => {
                                 ref={leftImageRef}
                                 src="/assets/journey-left-img.webp"
                                 alt="Journey Left Image"
-                                className="section_with_background-image"
+                                className="section_with_background-image parallex_img"
                             />
                         </div>
                         <div className="section_with_background-center">
@@ -68,7 +68,7 @@ export const JourneySection = () => {
                                 ref={rightImageRef}
                                 src="/assets/journey-right-img.webp"
                                 alt="Journey Right Image"
-                                className="section_with_background-image"
+                                className="section_with_background-image parallex_img"
                             />
                         </div>
                     </div>

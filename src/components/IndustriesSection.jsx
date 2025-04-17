@@ -7,7 +7,7 @@ export const IndustriesSection = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     function cardOverlapping() {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1024) {
         let cards = document.querySelectorAll(".card_overlay-item");
         cards.forEach((card, index) => {
           card.style.zIndex = index + 1;

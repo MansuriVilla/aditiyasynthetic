@@ -31,7 +31,7 @@ export const App = () => {
   return (
     <Router>
       <Header />
-      <main>
+      <main id="sitemain">
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
