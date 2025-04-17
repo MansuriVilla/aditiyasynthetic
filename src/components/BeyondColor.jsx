@@ -16,7 +16,7 @@ useEffect(() => {
         end: "+=1500",
         scrub: true,
         pin: true,
-        markers: true,
+        markers: false,
       }
     });
 
