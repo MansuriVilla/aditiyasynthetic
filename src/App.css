@@ -99,7 +99,7 @@ h1 {
   letter-spacing: -0.48px;
 }
 h2 {
-  font-size: clamp(38px, 4vw, 80px);
+  font-size: clamp(34px, 4vw, 80px);
   font-family: "Sequel Sans Bold Body";
   letter-spacing: -0.48px;
 }
@@ -422,10 +422,10 @@ video {
 */
 
 
-.section_with_background-image {
+.section_with_background-image-holder {
   overflow: hidden;
 }
-.section_with_background-image img {
+.section_with_background-image-holder img {
   scale: 1.3;
 }
 .section_with_background-inner {
@@ -449,7 +449,7 @@ video {
 }
 .section_with_background-description {
   color: var(--site_white-clr);
-  line-height: 33px;
+  line-height: clamp(24px, 5vw, 33px);
   font-weight: 300;
 }
 .section_with_background-title {
@@ -551,7 +551,7 @@ video {
   background: var(--site_white-clr);
 }
 .card p {
-  max-width: 506px;
+  max-width: clamp(260px, 40vw, 506px);
   width: 100%;
 }
 
@@ -676,7 +676,7 @@ video {
 }
 
 .why_choose-us-inner {
-  max-width: clamp(300px, 40vw, 800px);
+  max-width: clamp(600px, 40vw, 800px);
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -693,6 +693,9 @@ video {
 */
 .industries-section_title {
   margin-bottom: 40px;
+}
+.industries-section .section_inner-space{
+  padding-bottom: 0;
 }
 
 .industries-section_title h2 {
@@ -739,6 +742,18 @@ video {
   color: #fff;
 }
 
+
+/*-------------------------------------
+  Our Philosophy Styles
+--------------------------------
+*/
+
+.our_philosophy-section .section_with_background-image{min-height: 100vh; object-fit: cover;}
+
+
+
+
+
 /*-------------------------------------
   Footer Styles
   ------------------------------
@@ -759,10 +774,7 @@ footer {
   .animate_cover-image { border-radius: 10px; }
   .parallex_img{display: none;}
 
-  /* .industries-section_inner {
-    padding:
-  0px 40px;
-  } */
+  
 
   .snippets-holder{position: relative; inset: 0; display: grid;  row-gap: 40px;    grid-template-columns: repeat(auto-fill, minmax(clamp(270px, 50vw, 350px), 1fr));
   }
@@ -779,8 +791,16 @@ footer {
       .item_mask img{max-width: clamp(150px, 7vw, 500px);}
 
       .products_section-content-item h3{font-size: clamp(24px, 4vw, 80px);}
+      .card{position: relative;}
+      .Testimonial_section .container{display: flex;
+        flex-direction: column;
+        row-gap: 20px;}
+        .industries-section .section_inner-space{
+          padding-bottom: 50px;
+        }
 }
 
+@media only screen and (max-width:620px){.why_choose-us-inner{max-width: 90%;}}
 @media only screen and (max-width:575px){
   .hero_section-description{max-width: 200px;
     width: 100%;

@@ -51,6 +51,7 @@ const sectionRef = useRef(null);
     const imageRef = useRef(null);
 
     useEffect(() => {
+        if (window.innerWidth < 1025) return;
         gsap.registerPlugin(ScrollTrigger);
       
         const cards = document.querySelectorAll(".container .card");
@@ -119,7 +120,7 @@ const sectionRef = useRef(null);
 
         <section ref={sectionRef} className="section_with_background Testimonial_section">
         <div className="section_with_background-inner site_flex site_flex-column">
-            <div className="section_with_background-image hero_background site_flex">
+            <div className="section_with_background-image-holder hero_background site_flex">
                 <img ref={imageRef} src="/assets/testimonial-bg-2.webp" alt="Hero Section Image" className="section_with_background-image" />   
             </div>
             <div className="section_with_background-overlay section_inner-space">

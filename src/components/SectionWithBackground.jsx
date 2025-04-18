@@ -30,9 +30,9 @@ export const SectionWithBackground = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="section_with_background">
+        <section ref={sectionRef} className="section_with_background our_philosophy-section">
             <div className="section_with_background-inner site_flex site_flex-column">
-                <div className="section_with_background-image hero_background site_flex">
+                <div className="section_with_background-image-holder hero_background site_flex">
                     <img
                         ref={imageRef}
                         src="/assets/our-philosophy.webp"

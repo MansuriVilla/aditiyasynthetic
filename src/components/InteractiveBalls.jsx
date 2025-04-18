@@ -30,6 +30,7 @@ const InteractiveBalls = () => {
 
   useEffect(() => {
     if (!startAnimation) return;
+    if (!startAnimation || window.innerWidth < 1025) return;
 
     const engine = engineRef.current;
     const container = sceneRef.current;

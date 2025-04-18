@@ -15,7 +15,7 @@ const ProductsSection = () => {
         scrollTrigger: {
           trigger: ".products_section",
           start: "top top",
-          end: `+=${items.length * 200}%`,
+          end: `+=${items.length * 100}%`,
           scrub: true,
           pin: true,
           snap: 1 / (items.length - 1),
@@ -24,34 +24,27 @@ const ProductsSection = () => {
       });
   
       items.forEach((item) => {
-        const img = item.querySelector("img");
-        const title = item.querySelector("h3");
-  
         const tl = gsap.timeline();
         tl.fromTo(
-          img,
-          { opacity: 0, y: 50 },
-          { opacity: 1, y: 0, duration: 0.5 }
-        ).fromTo(
-          title,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5 },
-          "+=0.2"
+          item,
+          { opacity: 0, y: 100 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
         );
   
         master.add(tl);
       });
   
-      // Optional: clean this timeline on media unmatch
+      // Cleanup timeline on media unmatch
       return () => {
         master.kill();
       };
     });
   
     return () => {
-      mm.kill(); // Cleans up all matchMedia animations on unmount
+      mm.kill(); // Cleanup matchMedia
     };
   }, []);
+  
   
   return (
     <section className="products_section background-white">
