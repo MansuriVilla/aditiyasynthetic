@@ -43,7 +43,8 @@ img, picture, video { display: inline-flex; }
   Header Styles
   ------------------------------
 */
-.site_header { position: fixed; bottom: 120px; width: 100%; display: flex; justify-content: center; align-content: center; background: var(--site_white-clr); max-width: fit-content; border-radius: 50px; padding: 4px 20px 4px 4px; margin: 0 auto; transform: translate(-50%, -0%); left: 50%; z-index: 100; transition: all 0.3s linear; }
+.site_header { position: fixed; bottom: 120px; width: 100%; display: flex; justify-content: center; align-content: center; background: var(--site_white-clr); max-width: fit-content; border-radius: 50px; padding: 4px 4px 4px 4px; margin: 0 auto; transform: translate(-50%, -0%); left: 50%; z-index: 100; transition: all 0.3s linear; z-index: 9999; }
+.site_header.active_header .site_nav-link a{ color: var(--site_white-clr);}
 .site_header.background-orange { clip-path: none; }
 .site_header.background-orange :is(*) { color: var(--site_white-clr); }
 .site_header.background-orange :is(img):not(.site_nav-logo img) { filter: brightness(100); }
@@ -58,8 +59,79 @@ img, picture, video { display: inline-flex; }
  .site_nav-link a > .background { transform: scale(0.9); transition-property: opacity, transform; }
  }
 @media (hover: hover) and (pointer: fine) {
- .site_nav-link a:hover > .background { opacity: 0.1; transform: scale(1); }
+ .site_nav-link a:hover > .background, .site_nav-link a.active > .background { opacity: 0.1; transform: scale(1); }
  }
+
+
+/* Backface Overlay */
+.backface-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0; /* Start with opacity 0 */
+  pointer-events: none; /* Prevent interaction */
+}
+
+.site_header.background-orange .site_nav{background:
+  var(--site_primary-clr);}
+.site_nav{
+    border-radius:
+  50px;
+    overflow:
+  hidden;}
+
+/* Mega Menu */
+.mega_menu {
+
+
+
+  bottom: 0;
+  left: 0px;
+  overflow:
+hidden;
+
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: -9999999;
+  background:
+var(--site_primary-clr);
+  border-radius:
+25px;
+height: 0;
+overflow: hidden;
+
+}
+
+.mega_menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.mega_menu-list li {
+  opacity: 0; /* Start with opacity 0 for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+}
+
+.mega_menu-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.mega_menu-list li a:hover {
+  color: var(--site_primary-clr);
+}
+
+
 
 
 /* ------------------------------
