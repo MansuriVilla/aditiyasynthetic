@@ -152,7 +152,7 @@ export const Header = () => {
     const listRef = useRef(null);
     const menuContainerRef = useRef(null);
     const headerRef = useRef(null);
-    const megaMenuWrapperRef = useRef(null); // New ref for the wrapper
+    const megaMenuWrapperRef = useRef(null);
 
     const openMegaMenu = () => {
         const menu = menuContainerRef.current;
