@@ -146,19 +146,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const Header = () => {
     const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
-    const [isMenuVisible, setIsMenuVisible] = useState(false);
 
     const megaMenuRef = useRef(null);
     const overlayRef = useRef(null);
     const listRef = useRef(null);
     const menuContainerRef = useRef(null);
     const headerRef = useRef(null);
+    const megaMenuWrapperRef = useRef(null); // New ref for the wrapper
 
     const openMegaMenu = () => {
         const menu = menuContainerRef.current;
         if (!menu) return;
 
-        gsap.set(menu, { height: 'auto', paddingBottom: "55px" });
+        gsap.set(menu, { height: "auto", paddingBottom: "55px" });
         const menuHeight = menu.offsetHeight;
 
         gsap.from(menu, {
@@ -187,8 +187,9 @@ export const Header = () => {
             pointerEvents: "auto",
         });
 
+        gsap.set(menuContainerRef.current, { pointerEvents: "auto" });
+
         setIsMegaMenuOpen(true);
-        setIsMenuVisible(true);
     };
 
     const closeMegaMenu = () => {
@@ -202,7 +203,7 @@ export const Header = () => {
             ease: "power2.inOut",
             onComplete: () => {
                 setIsMegaMenuOpen(false);
-                setIsMenuVisible(false);
+                gsap.set(menuContainerRef.current, { pointerEvents: "none" });
             },
         });
 
@@ -221,23 +222,31 @@ export const Header = () => {
         });
     };
 
-    const handleMegaMenuHover = (isOpen) => {
+    const handleMegaMenuHover = (event, isEntering) => {
         const megaMenuState = megaMenuRef.current?.getAttribute("data-mega-menu");
 
         if (megaMenuState === "disabled") {
             setIsMegaMenuOpen(true);
-            setIsMenuVisible(true);
+            gsap.set(menuContainerRef.current, { pointerEvents: "auto" });
             return;
         }
 
-        isOpen ? openMegaMenu() : closeMegaMenu();
+        if (isEntering) {
+            openMegaMenu();
+        } else {
+            // Check if the cursor is still within the mega menu wrapper
+            const wrapper = megaMenuWrapperRef.current;
+            if (!wrapper || !event.relatedTarget || !wrapper.contains(event.relatedTarget)) {
+                closeMegaMenu();
+            }
+        }
     };
 
     useEffect(() => {
         const menuState = megaMenuRef.current?.getAttribute("data-mega-menu");
         if (menuState === "disabled") {
             setIsMegaMenuOpen(true);
-            setIsMenuVisible(true);
+            gsap.set(menuContainerRef.current, { pointerEvents: "auto" });
         }
     }, []);
 
@@ -253,7 +262,7 @@ export const Header = () => {
                 gsap.to(header, {
                     duration: 0.3,
                     bottom: scrollTop > 80 ? "20px" : "120px",
-                    ease: "power1.out"
+                    ease: "power1.out",
                 });
             };
 
@@ -274,7 +283,7 @@ export const Header = () => {
                         gsap.to(header, {
                             duration: 0.3,
                             bottom: "120px",
-                            ease: "power1.out"
+                            ease: "power1.out",
                         });
                     },
                     onLeave: () => {
@@ -283,7 +292,7 @@ export const Header = () => {
                             gsap.to(header, {
                                 duration: 0.3,
                                 bottom: "20px",
-                                ease: "power1.out"
+                                ease: "power1.out",
                             });
                         }
                     },
@@ -292,7 +301,7 @@ export const Header = () => {
                         gsap.to(header, {
                             duration: 0.3,
                             bottom: "120px",
-                            ease: "power1.out"
+                            ease: "power1.out",
                         });
                     },
                     onLeaveBack: () => {
@@ -301,13 +310,13 @@ export const Header = () => {
                             gsap.to(header, {
                                 duration: 0.3,
                                 bottom: "20px",
-                                ease: "power1.out"
+                                ease: "power1.out",
                             });
                         }
-                    }
+                    },
                 });
 
-                document.querySelectorAll('.background-white').forEach(section => {
+                document.querySelectorAll(".background-white").forEach((section) => {
                     ScrollTrigger.create({
                         trigger: section,
                         start: "top 89%",
@@ -315,16 +324,15 @@ export const Header = () => {
                         onEnter: () => header.classList.add("background-orange"),
                         onLeave: () => header.classList.remove("background-orange"),
                         onEnterBack: () => header.classList.add("background-orange"),
-                        onLeaveBack: () => header.classList.remove("background-orange")
+                        onLeaveBack: () => header.classList.remove("background-orange"),
                     });
                 });
-
             }, 100);
 
             return () => {
                 window.removeEventListener("scroll", handleScroll);
                 clearInterval(interval);
-                ScrollTrigger.getAll().forEach(t => t.kill());
+                ScrollTrigger.getAll().forEach((t) => t.kill());
             };
         });
 
@@ -333,7 +341,7 @@ export const Header = () => {
 
     return (
         <>
-            <header className={`site_header ${isMegaMenuOpen ? 'active_header' : ''}`} ref={headerRef}>
+            <header className={`site_header ${isMegaMenuOpen ? "active_header" : ""}`} ref={headerRef}>
                 <nav className="site_nav site_flex site_flex_center_vertical">
                     <ul className="site_nav-center site_nav-links site_flex site_flex_center_vertical">
                         <li className="site_nav-center-left">
@@ -353,35 +361,30 @@ export const Header = () => {
                         </li>
 
                         <li
-  className={`site_nav-link mega_menu-wrapper ${isMegaMenuOpen ? 'active' : ''}`}
-  ref={megaMenuRef}
-  data-mega-menu="enabled"
-  onMouseEnter={() => handleMegaMenuHover(true)}
-  onMouseLeave={() => handleMegaMenuHover(false)}
->
-  <a
-    href="/"
-    className="site_flex site_flex_center_vertical"
-  >
-    <span className="background"></span>
-    <span className="site_header-link-text">Shades</span>
-    <span className="site_flex site_flex_center_vertical">
-      <img src="/assets/dropdown-arrow-ico.svg" alt="dropdown arrow icon" />
-    </span>
-  </a>
+                            className={`site_nav-link mega_menu-wrapper ${isMegaMenuOpen ? "active" : ""}`}
+                            ref={megaMenuWrapperRef} // Attach ref to the wrapper
+                            onMouseEnter={(e) => handleMegaMenuHover(e, true)}
+                            onMouseLeave={(e) => handleMegaMenuHover(e, false)}
+                        >
+                            <div ref={megaMenuRef} data-mega-menu="enabled">
+                                <a href="/" className="site_flex site_flex_center_vertical">
+                                    <span className="background"></span>
+                                    <span className="site_header-link-text">Shades</span>
+                                    <span className="site_flex site_flex_center_vertical">
+                                        <img src="/assets/dropdown-arrow-ico.svg" alt="dropdown arrow icon" />
+                                    </span>
+                                </a>
 
-  {/* Mega Menu INSIDE <li> */}
-  <div className="mega_menu" ref={menuContainerRef}>
-    <ul className="mega_menu-list" ref={listRef}>
-      <li><a href="/shades/red">Red Shades</a></li>
-      <li><a href="/shades/blue">Blue Shades</a></li>
-      <li><a href="/shades/green">Green Shades</a></li>
-      <li><a href="/shades/yellow">Yellow Shades</a></li>
-    </ul>
-  </div>
-</li>
-
-
+                                <div className="mega_menu" ref={menuContainerRef}>
+                                    <ul className="mega_menu-list" ref={listRef}>
+                                        <li><a href="/shades/red">Red Shades</a></li>
+                                        <li><a href="/shades/blue">Blue Shades</a></li>
+                                        <li><a href="/shades/green">Green Shades</a></li>
+                                        <li><a href="/shades/yellow">Yellow Shades</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
 
                         <li className="site_nav-link">
                             <a href="#contact" className="site_flex site_flex_center_vertical">
@@ -396,7 +399,6 @@ export const Header = () => {
                 </nav>
             </header>
 
-            {/* Overlay */}
             <div className="backface-overlay" ref={overlayRef}></div>
         </>
     );

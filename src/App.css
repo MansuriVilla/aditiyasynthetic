@@ -63,8 +63,8 @@ img, picture, video { display: inline-flex; }
  }
 
 
-/* Backface Overlay */
-.backface-overlay {
+
+/* .backface-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -72,8 +72,8 @@ img, picture, video { display: inline-flex; }
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  opacity: 0; /* Start with opacity 0 */
-  pointer-events: none; /* Prevent interaction */
+  opacity: 0; 
+  pointer-events: none; 
 }
 
 .site_header.background-orange .site_nav{background:
@@ -84,7 +84,7 @@ img, picture, video { display: inline-flex; }
     overflow:
   hidden;}
 
-/* Mega Menu */
+
 .mega_menu {
 
 
@@ -116,8 +116,8 @@ overflow: hidden;
 }
 
 .mega_menu-list li {
-  opacity: 0; /* Start with opacity 0 for animation */
-  transform: translateY(20px); /* Start slightly below for animation */
+  opacity: 0; 
+  transform: translateY(20px); 
 }
 
 .mega_menu-list li a {
@@ -130,10 +130,73 @@ overflow: hidden;
 .mega_menu-list li a:hover {
   color: var(--site_primary-clr);
 }
+ */
+
+/* styles.css */
+
+/* Backface Overlay */
+.backface-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site_header.background-orange .site_nav {
+  background: var(--site_primary-clr);
+}
 
 
+/* Mega Menu */
+.mega_menu {
+  position: absolute;
+  bottom: 0%;
+  left: 0;
+  right: 0; 
+  width: 100%;
+  background: var(--site_primary-clr);
+  border-radius: 25px;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
 
+.mega_menu-wrapper.active .mega_menu {
+  pointer-events: auto; /* Interactive when open */
+}
 
+.mega_menu-list {
+  list-style: none;
+  margin: 20px 0;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center; /* Center items for better appearance */
+  gap: 20px;
+}
+
+.mega_menu-list li {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.mega_menu-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  display: block;
+  padding: 10px;
+}
+
+.mega_menu-list li a:hover {
+  color: var(--site_primary-clr);
+}
 /* ------------------------------
   Hero Styles
   ------------------------------
