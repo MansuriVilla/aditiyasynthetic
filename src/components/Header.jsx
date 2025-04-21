@@ -362,7 +362,7 @@ export const Header = () => {
 
                         <li
                             className={`site_nav-link mega_menu-wrapper ${isMegaMenuOpen ? "active" : ""}`}
-                            ref={megaMenuWrapperRef} // Attach ref to the wrapper
+                            ref={megaMenuWrapperRef}
                             onMouseEnter={(e) => handleMegaMenuHover(e, true)}
                             onMouseLeave={(e) => handleMegaMenuHover(e, false)}
                         >
