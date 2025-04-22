@@ -47,7 +47,7 @@ img, picture, video { display: inline-flex; }
 .site_header.active_header .site_nav-link a{ color: var(--site_white-clr);}
 .site_header.background-orange { clip-path: none; }
 .site_header.background-orange :is(*) { color: var(--site_white-clr); }
-.site_header.background-orange :is(img):not(.site_nav-logo img) { filter: brightness(100); }
+.site_header.background-orange :is(img):not(.site_nav-logo img), .site_header.active_header :is(img):not(.site_nav-logo img){ filter: brightness(100); }
 .site_nav-logo { background: var(--site_secondary-clr); display: flex; padding: 8px 17px; border-radius: 50px; }
 .site_nav-center { gap: clamp(18px, 4vw, 28px); }
 .site_nav-link a { color: var(--site_primary-clr); padding: 10px; border-radius: 50px; position: relative; }

@@ -91,19 +91,19 @@ export const IndustriesSection = () => {
             </div>
             <div className="card_overlay-item">
               <div className="card_overlay desktop-image">
-                  <img src="/assets/stones.webp"  alt="" />
+                  <img src="/assets/cosmetics-personal-care-img.webp"  alt="" />
                 </div>
                 <h2>Cosmetics & Personal Care</h2>
             </div>
             <div className="card_overlay-item">
               <div className="card_overlay desktop-image">
-                  <img src="/assets/cloths-pices.webp"  alt="" />
+                  <img src="/assets/food-beverages-img.webp"  alt="" />
                 </div>
                 <h2>Food & Beverages (Certified Colors)</h2>
             </div>
             <div className="card_overlay-item">
               <div className="card_overlay desktop-image">
-                  <img src="/assets/bukets.webp"  alt="" />
+                  <img src="/assets/pharmaceuticals-img.webp"  alt="" />
                 </div>
                 <h2>Pharmaceuticals</h2>
             </div>
