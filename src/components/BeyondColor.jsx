@@ -62,7 +62,7 @@ useEffect(() => {
 
     tl.to(".snippet", {
       zIndex: 1,
-      opacity: 0.8,
+      opacity: 1,
       ease: "none"
     }, 0.5);
 
