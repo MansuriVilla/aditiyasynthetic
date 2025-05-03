@@ -1,12 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import InteractiveBalls from "./InteractiveBalls"; 
 
 gsap.registerPlugin(ScrollTrigger);
-
-
-import InteractiveBalls from "./InteractiveBalls"; 
 
 const WhyChooseUsSection = () => {
   const sectionRef = useRef(null);
@@ -14,10 +11,8 @@ const WhyChooseUsSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      
       const labels = labelsContainerRef.current.querySelectorAll(".why_choose-us-label");
 
-      
       gsap.from(labels, {
         scrollTrigger: {
           trigger: labelsContainerRef.current,
@@ -43,6 +38,7 @@ const WhyChooseUsSection = () => {
   return (
     <section id="convert-fiat" className="background-white" ref={sectionRef}>
       <div className="why_choose-us-section">
+        <InteractiveBalls />
         <div className="why_choose-us-inner site_flex site_flex-column site_flex_center_vertical section_inner-space">
           <div className="why_choose-us-top">
             <h2 className="title_orange">Why Choose Us?</h2>
@@ -68,7 +64,6 @@ const WhyChooseUsSection = () => {
           </div>
         </div>
       </div>
-      <InteractiveBalls />
     </section>
   );
 };

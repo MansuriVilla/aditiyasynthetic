@@ -234,6 +234,7 @@ export const Header = () => {
                                         <img src="/assets/dropdown-arrow-ico.svg" alt="dropdown arrow icon" />
                                     </span>
                                 </a>
+                            </div>
 
                                 <div className="mega_menu" ref={menuContainerRef}>
                                     <ul className="mega_menu-list" ref={listRef}>
@@ -243,7 +244,6 @@ export const Header = () => {
                                         <li><a href="/shades/yellow">Yellow Shades</a></li>
                                     </ul>
                                 </div>
-                            </div>
                         </li>
 
                         <li className="site_nav-link">

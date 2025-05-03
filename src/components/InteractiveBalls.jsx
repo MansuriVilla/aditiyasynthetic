@@ -1,263 +1,276 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Matter from 'matter-js';
+import { useEffect, useRef, useState } from 'react';
+import Physics from 'physicsjs';
 
 const InteractiveBalls = () => {
-  const sceneRef = useRef(null);
-  const engineRef = useRef(Matter.Engine.create());
-  const runnerRef = useRef(null);
-  const renderRef = useRef(null);
-  const [startAnimation, setStartAnimation] = useState(false);
-  const ballsRef = useRef([]);
+  const canvasRef = useRef(null);
+  const worldRef = useRef(null);
+  const spawnedRef = useRef(false);
+  const imageLoadAttempted = useRef(false);
+  const [loadingError, setLoadingError] = useState(null);
+
+  const imageURLs = [
+    '/assets/Ellipse-1.webp',
+    '/assets/Ellipse-2.webp',
+    '/assets/Ellipse-3.webp',
+    '/assets/Ellipse-4.webp',
+    '/assets/Ellipse-5.webp',
+    '/assets/Ellipse-6.webp',
+    '/assets/Ellipse-7.webp',
+    '/assets/Ellipse-8.webp',
+    '/assets/Ellipse-9.webp',
+    '/assets/Ellipse-10.webp',
+    '/assets/Ellipse-11.webp',
+    '/assets/Ellipse-12.webp',
+    '/assets/Ellipse-13.webp',
+    '/assets/Ellipse-14.webp',
+    '/assets/Ellipse-15.webp',
+    '/assets/Ellipse-16.webp',
+    '/assets/Ellipse-17.webp',
+  ];
+
+  const resizeCanvas = () => {
+    const canvas = canvasRef.current;
+    const section = canvas?.parentElement;
+    if (canvas && section) {
+      const rect = section.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      console.log('Canvas resized:', { width: rect.width, height: rect.height });
+
+      if (worldRef.current) {
+        const edgeBehavior = worldRef.current.getBehaviors().find(b => b.options.aabb);
+        if (edgeBehavior) {
+          edgeBehavior.options.aabb = Physics.aabb(0, 0, rect.width, rect.height);
+        }
+        updateLabelBodies();
+      }
+    } else {
+      console.warn('Canvas or section not found for resizing');
+    }
+  };
+
+  const updateLabelBodies = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !worldRef.current) return;
+
+    const existingLabelBodies = worldRef.current.getBodies().filter(body => body.isLabel);
+    existingLabelBodies.forEach(body => worldRef.current.remove(body));
+
+    const labels = document.querySelectorAll('.why_choose-us-label');
+    const canvasRect = canvas.getBoundingClientRect();
+
+    labels.forEach((label, index) => {
+      const rect = label.getBoundingClientRect();
+      const body = Physics.body('rectangle', {
+        x: rect.left - canvasRect.left + rect.width / 2,
+        y: rect.top - canvasRect.top, // Align with top of label
+        width: rect.width,
+        height: rect.height,
+        mass: 1,
+        restitution: 0.6,
+        cof: 0.8,
+        treatment: 'static',
+        isLabel: true,
+      });
+      worldRef.current.add(body);
+      console.log(`Added label body ${index + 1}:`, { x: body.state.pos.x, y: body.state.pos.y, width: rect.width, height: rect.height });
+    });
+  };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStartAnimation(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    if (imageLoadAttempted.current) return;
+    imageLoadAttempted.current = true;
 
-    if (sceneRef.current) {
-      observer.observe(sceneRef.current);
-    }
+    console.log('Starting image preload');
+    const loadedImages = [];
+    let imagesLoaded = 0;
+    let errorCount = 0;
+
+    imageURLs.forEach((url, index) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        loadedImages[index] = img;
+        imagesLoaded++;
+        console.log(`Image loaded: ${url}`);
+        if (imagesLoaded === imageURLs.length) {
+          initPhysics(loadedImages.filter(Boolean));
+        }
+      };
+      img.onerror = () => {
+        console.error('Failed to load image:', url);
+        errorCount++;
+        imagesLoaded++;
+        if (imagesLoaded === imageURLs.length) {
+          if (errorCount === imageURLs.length) {
+            setLoadingError('All images failed to load. Using fallback circles.');
+            initPhysics([]);
+          } else if (errorCount > 0) {
+            setLoadingError('Some images failed to load. Using available images.');
+            initPhysics(loadedImages.filter(Boolean));
+          } else {
+            initPhysics(loadedImages);
+          }
+        }
+      };
+    });
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('scroll', updateLabelBodies);
+    resizeCanvas();
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('scroll', updateLabelBodies);
+      if (worldRef.current) {
+        Physics.util.ticker.stop();
+        worldRef.current.destroy();
+      }
     };
   }, []);
 
-  useEffect(() => {
-    if (!startAnimation) return;
-    if (!startAnimation || window.innerWidth < 1025) return;
+  const initPhysics = (loadedImages) => {
+    console.log('Physics initialized with', loadedImages.length, 'images');
+    Physics(function (world) {
+      worldRef.current = world;
 
-    const engine = engineRef.current;
-    const container = sceneRef.current;
-
-    // Initial dimensions
-    let width = container.clientWidth;
-    let height = container.clientHeight;
-
-    const render = Matter.Render.create({
-      element: container,
-      engine,
-      options: {
-        width,
-        height,
-        wireframes: false,
-        background: 'transparent',
-      },
-    });
-    renderRef.current = render;
-
-    // Style canvas properly
-    render.canvas.style.position = 'absolute';
-    render.canvas.style.top = '0';
-    render.canvas.style.left = '0';
-    render.canvas.style.width = '100%';
-    render.canvas.style.height = '100%';
-
-    const runner = Matter.Runner.create();
-    runnerRef.current = runner;
-
-    Matter.Runner.run(runner, engine);
-    Matter.Render.run(render);
-
-    // Add mouse control for interactivity
-    const mouse = Matter.Mouse.create(render.canvas);
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
+      const canvas = canvasRef.current;
+      const renderer = Physics.renderer('canvas', {
+        el: canvas,
+        meta: false,
+        styles: {
+          'circle': {
+            fillStyle: loadedImages.length ? 'transparent' : '#f28c38',
+            strokeStyle: loadedImages.length ? 'none' : '#000',
+            lineWidth: 1
+          },
+          'rectangle': {
+            fillStyle: 'transparent',
+            strokeStyle: 'none'
+          }
         },
-      },
+      });
+
+      world.add(renderer);
+      world.on('step', () => world.render());
+
+      world.add([
+        Physics.behavior('edge-collision-detection', {
+          aabb: Physics.aabb(0, 0, canvas.width, canvas.height),
+          restitution: 0.2,
+          cof: 0.8,
+        }),
+        Physics.behavior('body-impulse-response'),
+        Physics.behavior('body-collision-detection'),
+        Physics.behavior('constant-acceleration', { acc: { x: 0, y: 0.001 } }),
+        Physics.behavior('sweep-prune'),
+      ]);
+
+      const spawnBall = () => {
+        const idx = loadedImages.length ? Math.floor(Math.random() * loadedImages.length) : 0;
+        const img = loadedImages.length ? loadedImages[idx] : null;
+        const radius = 68;
+        const ball = Physics.body('circle', {
+          x: Math.random() * canvas.width,
+          y: -radius * 2,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: Math.random() * 0.2,
+          radius: radius,
+          mass: 1,
+          restitution: 0.6,
+          view: img,
+        });
+        world.add(ball);
+        console.log('Spawned ball:', { x: ball.state.pos.x, y: ball.state.pos.y });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !spawnedRef.current) {
+              spawnedRef.current = true;
+              console.log('Spawning balls');
+              for (let i = 0; i < 17; i++) {
+                setTimeout(spawnBall, i * 100);
+              }
+              obs.unobserve(canvas);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(canvas);
+      updateLabelBodies();
+
+      Physics.util.ticker.on(time => world.step(time));
+      Physics.util.ticker.start();
     });
+  };
 
-    Matter.World.add(engine.world, mouseConstraint);
-    render.mouse = mouse;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    let draggedBody = null;
+    let offset = { x: 0, y: 0 };
+    let lastMouse = { x: 0, y: 0 };
+    let mouseVelocity = { x: 0, y: 0 };
 
-    mouseConstraint.mouse.element.removeEventListener('mousewheel', mouseConstraint.mouse.mousewheel);
-    mouseConstraint.mouse.element.removeEventListener('DOMMouseScroll', mouseConstraint.mouse.mousewheel);
-
-    const context = render.context;
-    const originalDrawBody = Matter.Render.body;
-
-    Matter.Render.body = (render, body) => {
-      if (body.render.sprite && body.render.sprite.texture) {
-        const { sprite } = body.render;
-        const { x, y } = body.position;
-        const radius = body.circleRadius;
-
-        context.save();
-        context.translate(x, y);
-        context.rotate(body.angle);
-
-        context.beginPath();
-        context.arc(0, 0, radius, 0, 2 * Math.PI);
-        context.clip();
-
-        const image = new Image();
-        image.src = sprite.texture;
-
-        image.onload = () => {
-          context.drawImage(
-            image,
-            -radius * sprite.xScale,
-            -radius * sprite.yScale,
-            2 * radius * sprite.xScale,
-            2 * radius * sprite.yScale
-          );
-        };
-
-        context.restore();
-      } else {
-        originalDrawBody(render, body);
+    const handleMouseDown = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      const bodies = worldRef.current?.find({ $at: pos }) || [];
+      if (bodies.length) {
+        draggedBody = bodies[0];
+        offset.x = draggedBody.state.pos.x - pos.x;
+        offset.y = draggedBody.state.pos.y - pos.y;
+        draggedBody.sleep(false);
+        lastMouse = { ...pos };
+        console.log('Dragging ball:', pos);
       }
     };
 
-    // Walls (side + bottom)
-    const ground = Matter.Bodies.rectangle(width / 2, height, width, 60, {
-      isStatic: true,
-      render: { visible: false },
-    });
-    const leftWall = Matter.Bodies.rectangle(-30, height / 2, 60, height, {
-      isStatic: true,
-      render: { visible: false },
-    });
-    const rightWall = Matter.Bodies.rectangle(width + 30, height / 2, 60, height, {
-      isStatic: true,
-      render: { visible: false },
-    });
-
-    Matter.World.add(engine.world, [ground, leftWall, rightWall]);
-
-    // Convert DOM labels to Matter.js bodies
-    const updateStaticBodies = () => {
-      const bodiesToRemove = engine.world.bodies.filter(
-        (body) => body.isStatic && body !== ground && body !== leftWall && body !== rightWall
-      );
-      bodiesToRemove.forEach((body) => Matter.World.remove(engine.world, body));
-
-      const labelElements = document.querySelectorAll('.why_choose-us-bottom');
-
-      labelElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-      
-        const buffer = 50; // Add a buffer to avoid clipping
-      
-        const x = rect.left + rect.width / 2 - containerRect.left;
-        const y = rect.top + rect.height / 2 - containerRect.top;
-      
-        const width = rect.width + buffer;
-        const height = rect.height + buffer;
-      
-        const body = Matter.Bodies.rectangle(x, y, width, height, {
-          isStatic: true,
-          render: {
-            visible: false,
-          },
-        });
-      
-        Matter.World.add(engine.world, body);
-      });
-      
+    const handleMouseMove = (e) => {
+      if (draggedBody) {
+        const rect = canvas.getBoundingClientRect();
+        const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        mouseVelocity.x = pos.x - lastMouse.x;
+        mouseVelocity.y = pos.y - lastMouse.y;
+        draggedBody.state.pos.x = pos.x + offset.x;
+        draggedBody.state.pos.y = pos.y + offset.y;
+        lastMouse = { ...pos };
+      }
     };
 
-    updateStaticBodies();
-
-    // Ball dropping
-    const imageUrls = [
-      '/assets/Ellipse-1.webp',
-      '/assets/Ellipse-2.webp',
-      '/assets/Ellipse-3.webp',
-      '/assets/Ellipse-4.webp',
-      '/assets/Ellipse-5.webp',
-      '/assets/Ellipse-6.webp',
-      '/assets/Ellipse-7.webp',
-      '/assets/Ellipse-8.webp',
-      '/assets/Ellipse-9.webp',
-      '/assets/Ellipse-10.webp',
-      '/assets/Ellipse-11.webp',
-      '/assets/Ellipse-12.webp',
-      '/assets/Ellipse-13.webp',
-      '/assets/Ellipse-14.webp',
-      '/assets/Ellipse-15.webp',
-      '/assets/Ellipse-16.webp',
-      '/assets/Ellipse-17.webp',
-    ];
-
-    const dropInterval = setInterval(() => {
-      if (ballsRef.current.length >= 17) return;
-
-      const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-      const ball = Matter.Bodies.circle(Math.random() * width, -40, 30, {
-        restitution: 0.8, 
-        friction: 0.001,  
-        render: {
-          sprite: {
-            texture: randomImage,
-            xScale: 0.8,
-            yScale: 0.8,
-          },
-        },
-      });
-
-      ballsRef.current.push(ball);
-      Matter.World.add(engine.world, ball);
-    }, 120);
-
-    const handleResize = () => {
-      width = container.clientWidth;
-      height = container.clientHeight;
-
-      render.options.width = width;
-      render.options.height = height;
-      render.canvas.width = width;
-      render.canvas.height = height;
-
-      Matter.Body.setPosition(ground, { x: width / 2, y: height });
-      Matter.Body.setPosition(leftWall, { x: -30, y: height / 2 });
-      Matter.Body.setPosition(rightWall, { x: width + 30, y: height / 2 });
-
-      updateStaticBodies();
+    const handleMouseUp = () => {
+      if (draggedBody) {
+        draggedBody.state.vel.x = mouseVelocity.x * 0.1; // Reduced multiplier for smoother throw
+        draggedBody.state.vel.y = mouseVelocity.y * 0.1; // Reduced multiplier for smoother throw
+        draggedBody = null;
+        console.log('Released ball');
+      }
     };
 
-    window.addEventListener('resize', handleResize);
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      clearInterval(dropInterval);
-      Matter.Render.stop(render);
-      Matter.Runner.stop(runner);
-      Matter.World.clear(engine.world);
-      Matter.Engine.clear(engine);
-      render.canvas.remove();
-      render.textures = {};
-      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [startAnimation]);
+  }, []);
+
+  if (loadingError) {
+    return <div className="error">{loadingError}</div>;
+  }
 
   return (
-    <div
-      ref={sceneRef}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        overflow: 'hidden',
-        zIndex: 1,
-        // pointerEvents: 'none',
-      }}
+    <canvas
+      ref={canvasRef}
+      className="why_choose-us-canvas"
     />
   );
 };
 
 export default InteractiveBalls;
-
-
-
